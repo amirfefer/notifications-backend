@@ -243,6 +243,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skip>true</skip>
                     <includeOnlyProperties>
                         <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
                     </includeOnlyProperties>
