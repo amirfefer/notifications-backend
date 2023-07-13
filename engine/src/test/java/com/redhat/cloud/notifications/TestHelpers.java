@@ -552,6 +552,57 @@ public class TestHelpers {
         return emailActionMessage;
     }
 
+    public static Action createImageBuilderAction(String eventType) {
+        Action emailActionMessage = new Action();
+        emailActionMessage.setBundle(StringUtils.EMPTY);
+        emailActionMessage.setApplication(StringUtils.EMPTY);
+        emailActionMessage.setTimestamp(LocalDateTime.of(2020, 10, 3, 15, 22, 13, 25));
+        emailActionMessage.setEventType(eventType);
+        emailActionMessage.setAccountId(StringUtils.EMPTY);
+        emailActionMessage.setOrgId(DEFAULT_ORG_ID);
+
+        emailActionMessage.setContext(
+            new Context.ContextBuilder()
+            .withAdditionalProperty("provider", "aws")
+            .withAdditionalProperty("launch_id", 3011)
+            .build());
+        if (eventType.equals("launch-success")) {
+            emailActionMessage.setEvents(List.of(
+                new Event.EventBuilder()
+                .withMetadata(new Metadata.MetadataBuilder().build())
+                .withPayload(
+                    new Payload.PayloadBuilder()
+                    .withAdditionalProperty("instance_id", "i-0cbaed564af9faf")
+                    .withAdditionalProperty("detail",
+                        Map.of("public_ipv4", "92.123.32.3", "public_dns",
+                            "ec2-92-123-32-3.compute-1.amazonaws.com"))
+                    .build())
+                .build(),
+                new Event.EventBuilder()
+                .withMetadata(new Metadata.MetadataBuilder().build())
+                .withPayload(
+                    new Payload.PayloadBuilder()
+                    .withAdditionalProperty("instance_id", "i-0aba12564af9faf")
+                    .withAdditionalProperty("detail",
+                        Map.of("public_ipv4", "91.123.32.4", "public_dns",
+                            "ec91.123.32.4.compute-1.amazonaws.com"))
+                    .build())
+                .build()));
+        } else {
+            emailActionMessage.setEvents(List.of(
+                new Event.EventBuilder()
+                .withMetadata(new Metadata.MetadataBuilder().build())
+                .withPayload(
+                    new Payload.PayloadBuilder()
+                    .withAdditionalProperty("error", "Some launch error")
+                    .build())
+                .build()));
+
+        }
+
+        return emailActionMessage;
+    }
+
     public static Action createResourceOptimizationAction() {
         Map<String, Object> aggregatedData = new HashMap<>();
         aggregatedData.put(ResourceOptimizationPayloadAggregator.SYSTEMS_WITH_SUGGESTIONS, 134);

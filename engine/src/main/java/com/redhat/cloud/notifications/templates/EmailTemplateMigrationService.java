@@ -420,6 +420,27 @@ public class EmailTemplateMigrationService {
                 "Vulnerability/dailyEmailBody", "html", "Vulnerability daily email body"
             );
 
+            /*
+             * Former src/main/resources/templates/ImageBuilder folder.
+             */
+
+            getOrCreateTemplate("ImageBuilder/insightsEmailBody", "html", "Images Insights email body");
+            createInstantEmailTemplate(
+                warnings, "rhel", "image-builder", List.of("launch-success"),
+                "ImageBuilder/launchSuccessInstantEmailTitle", "txt", "Image Builder launch success title",
+                "ImageBuilder/launchSuccessInstantEmailBody", "html", "Image Builder launch success body"
+            );
+            createInstantEmailTemplate(
+                warnings, "rhel", "image-builder", List.of("launch-success"),
+                "ImageBuilder/launchFailedInstantEmailTitle", "txt", "Image Builder launch failed title",
+                "ImageBuilder/launchFailedEmailBody", "html", "Image Builder launch failed body"
+            );
+            createDailyEmailTemplate(
+                warnings, "rhel", "image-builder",
+                "ImageBuilder/dailyEmailTitle", "txt", "Image Builder daily digest title",
+                "ImageBuilder/dailyEmailBody", "html", "Image Builder daily digest body"
+            );
+
             getOrCreateTemplate("Common/insightsEmailBody", "html", "Common Insights email body");
         }
         Log.debug("Migration ended");
